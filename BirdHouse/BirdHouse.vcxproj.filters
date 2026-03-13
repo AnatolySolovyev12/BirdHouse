@@ -32,9 +32,6 @@
     <QtMoc Include="BirdHouse.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <ClCompile Include="BirdHouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -43,10 +40,24 @@
     <ClCompile Include="GeneralClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BirdHouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralParam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GeneralClass.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="GeneralParam.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="GeneralParam.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

@@ -51,7 +51,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
@@ -61,12 +61,20 @@
     <QtRcc Include="BirdHouse.qrc" />
     <QtUic Include="BirdHouse.ui" />
     <QtMoc Include="BirdHouse.h" />
-    <ClCompile Include="BirdHouse.cpp" />
+    <ClCompile Include="BirdHouse.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="GeneralClass.cpp" />
+    <ClCompile Include="GeneralParam.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="GeneralParam.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GeneralClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="GeneralParam.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
