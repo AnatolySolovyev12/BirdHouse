@@ -42,6 +42,7 @@ BirdHouse::BirdHouse(QWidget * parent)
 	initializationPoolFunc();
 
 	getTokenFromFile();
+
 }
 
 
@@ -189,7 +190,7 @@ void BirdHouse::closeEditor(QTreeWidgetItem* any) // слот закрытия �
 		validTime(any);
 	}
 
-	if (any->text(9).toInt() < 5 || any->text(9).toInt() > 150)
+	if ((any->text(9).length() < 5 && (!any->text(1).isEmpty() || !any->text(2).isEmpty())) || (any->text(9).length() > 150 && (!any->text(1).isEmpty() || !any->text(2).isEmpty())))
 	{
 		any->setText(9, "Обратитесь в Горэлектросеть касательно будущего отключения электроэнергии");
 	}
@@ -268,7 +269,7 @@ void BirdHouse::initializationPoolFunc()
 			validTime(ui.treeWidget->topLevelItem(count));
 		}
 
-		if (ui.treeWidget->topLevelItem(count)->text(9).toInt() < 5 || ui.treeWidget->topLevelItem(count)->text(9).toInt() > 150)
+		if ((ui.treeWidget->topLevelItem(count)->text(9).length() < 5 && (!ui.treeWidget->topLevelItem(count)->text(1).isEmpty() || !ui.treeWidget->topLevelItem(count)->text(2).isEmpty())) || ui.treeWidget->topLevelItem(count)->text(9).length() > 150 && (!ui.treeWidget->topLevelItem(count)->text(1).isEmpty() || !ui.treeWidget->topLevelItem(count)->text(2).isEmpty()))
 		{
 			ui.treeWidget->topLevelItem(count)->setText(9, "Обратитесь в Горэлектросеть касательно будущего отключения электроэнергии");
 		}
