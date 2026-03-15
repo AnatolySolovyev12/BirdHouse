@@ -7,6 +7,8 @@
 #include <QJsonArray>
 #include <QTreeWidgetItem>
 
+#include <iostream>
+
 class JsonFormatingClass  : public QObject
 {
 	Q_OBJECT
@@ -15,6 +17,6 @@ public:
 	JsonFormatingClass(QObject *parent = nullptr);
 	~JsonFormatingClass();
 
-	void reFormat(QTreeWidgetItem* any);
+	void reFormat(QTreeWidget* val);
 };
 

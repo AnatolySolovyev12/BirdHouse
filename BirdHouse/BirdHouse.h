@@ -47,7 +47,7 @@ public:
 
 
 signals:
-    void giveObjectToConvertInJson(QTreeWidgetItem* any);
+    void giveObjectToConvertInJson(QTreeWidget* any);
 
 
 private:

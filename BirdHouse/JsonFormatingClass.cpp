@@ -9,43 +9,52 @@ JsonFormatingClass::~JsonFormatingClass()
 {
 }
 
-
-void JsonFormatingClass::reFormat(QTreeWidgetItem* any)
+void JsonFormatingClass::reFormat(QTreeWidget* val)
 {
 	QJsonDocument doc;
+
 	QJsonArray messageArray;
+	QJsonObject taskObject;
+	QJsonArray arrayOfTask;
 
-	for (int countChild = 0; countChild < any->childCount(); countChild++)
+	for (int count = 0; count < val->topLevelItemCount(); count++)
 	{
-		QTreeWidgetItem* child = any->child(countChild);
+		QTreeWidgetItem* parentTop = val->topLevelItem(count);
 
-		QJsonObject messegeObject
+		for (int countChild = 0; countChild < parentTop->childCount(); countChild++)
 		{
-		   { "numberMessege", child->text(0) },
-		   { "mail", child->text(1) },
-		   { "phoneNumber", child->text(2) },
-		   { "sendMax", child->checkState(3) },
-		   { "sendTelegram", child->checkState(4) },
-		   { "sendMail", child->checkState(5) },
-		   { "sendSms", child->checkState(6) },
-		   { "date", child->text(7) },
-		   { "time", child->text(8) },
-		   { "text", child->text(9) }
+			QTreeWidgetItem* child = parentTop->child(countChild);
+
+			QJsonObject messegeObject
+			{
+			   { "numberMessege", child->text(0) },
+			   { "mail", child->text(1) },
+			   { "phoneNumber", child->text(2) },
+			   { "sendMax", child->checkState(3) },
+			   { "sendTelegram", child->checkState(4) },
+			   { "sendMail", child->checkState(5) },
+			   { "sendSms", child->checkState(6) },
+			   { "date", child->text(7) },
+			   { "time", child->text(8) },
+			   { "text", child->text(9) }
+			};
+
+			messageArray.push_back(messegeObject);
+		}
+
+		QJsonObject taskObject
+		{
+		  
+		   { "messegeArray", messageArray },
+			{ "numberTask", parentTop->text(0) }
 		};
 
-		messageArray.push_back(messegeObject);
+		arrayOfTask.push_back(taskObject);
 	}
 
-	QJsonObject taskObject
-	{
-	   {"numberTask", any->text(0)},
-	   { "messegeArray", messageArray }
-	};
-
-	qDebug() << taskObject;
-
-
-
+	doc.setArray(arrayOfTask);
+	QByteArray bytes = doc.toJson(QJsonDocument::Compact); // или Indented
+	std::cout << bytes.constData() << std::endl;
 
 
 	//doc.setObject(taskObject);

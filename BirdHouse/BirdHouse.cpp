@@ -369,5 +369,5 @@ void BirdHouse::refreshSettingInBirdHouse()
 void BirdHouse::sendJSONtoServer()
 {
 
-	emit giveObjectToConvertInJson(ui.treeWidget->currentItem());
+	emit giveObjectToConvertInJson(ui.treeWidget);
 }
