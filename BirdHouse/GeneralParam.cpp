@@ -1,9 +1,6 @@
-﻿
-
-#include "GeneralParam.h"
+﻿#include "GeneralParam.h"
 #include <QElapsedTimer>
 #include <QFile>
-
 
 GeneralParam::GeneralParam(QWidget* parent)
 	: QMainWindow(parent)
@@ -16,15 +13,19 @@ GeneralParam::GeneralParam(QWidget* parent)
 	readDefaultConfig();
 }
 
+
+
 GeneralParam::~GeneralParam()
 {
 }
+
 
 
 void GeneralParam::fileNameSetter(QString any)
 {
 	fileForSend = any;
 }
+
 
 
 void GeneralParam::readDefaultConfig()
@@ -41,12 +42,10 @@ void GeneralParam::readDefaultConfig()
 
 	int countParam = 0;
 
-	// Ñ÷èòûâàåì ôàéë ñòðîêà çà ñòðîêîé
-
-	while (!in.atEnd()) // ìåòîä atEnd() âîçâðàùàåò true, åñëè â ïîòîêå áîëüøå íåò äàííûõ äëÿ ÷òåíèÿ
+	while (!in.atEnd())
 	{
-		QString line = in.readLine(); // ìåòîä readLine() ñ÷èòûâàåò îäíó ñòðîêó èç ïîòîêà
-		++countParam;
+		QString line = in.readLine();
+
 		QString temporary;
 
 		for (auto& val : line)
@@ -238,15 +237,14 @@ void GeneralParam::readDefaultConfig()
 }
 
 
+
 void GeneralParam::writeCurrent()
 {
 	QFile file(QCoreApplication::applicationDirPath() + "\\config.txt");
 
-	// Îòêðûâàåì ôàéë â ðåæèìå "Òîëüêî äëÿ çàïèñè"
 	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-		QTextStream out(&file); // ïîòîê çàïèñûâàåìûõ äàííûõ íàïðàâëÿåì â ôàéë
+		QTextStream out(&file);
 
-		// Äëÿ çàïèñè äàííûõ â ôàéë èñïîëüçóåì îïåðàòîð <<
 		out << ui.nameLine->text() << Qt::endl;
 		out << ui.directoryLine->text() << Qt::endl;
 		out << ui.deadlineLine->text() << Qt::endl;
@@ -279,10 +277,14 @@ void GeneralParam::writeCurrent()
 	emit refreshSetting();
 }
 
+
+
 bool GeneralParam::getNameCheck()
 {
 	return ui.checkBoxNameCounter->isChecked();
 }
+
+
 
 QList<int> GeneralParam::getMessegeWeekMaskInGeneral()
 {

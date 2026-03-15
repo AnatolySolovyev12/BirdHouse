@@ -26,8 +26,8 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.2.4_msvc2019_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
+    <QtModules>core;network;widgets;axcontainer;sql</QtModules>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
@@ -58,6 +58,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="JsonFormatingClass.cpp" />
+    <ClCompile Include="TcpSocketClass.cpp" />
     <QtRcc Include="BirdHouse.qrc" />
     <QtUic Include="BirdHouse.ui" />
     <QtMoc Include="BirdHouse.h" />
@@ -75,6 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GeneralParam.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="TcpSocketClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="JsonFormatingClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

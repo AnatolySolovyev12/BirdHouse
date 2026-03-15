@@ -32,47 +32,50 @@ BirdHouse::BirdHouse(QWidget * parent)
 	connect(ui.treeWidget, &QTreeWidget::itemChanged, this, &BirdHouse::closeEditor);
 	connect(ui.treeWidget, &QTreeWidget::itemClicked, this, &BirdHouse::otherItemWasChecked);
 
-	connect(ui.pushButtonRefresh, &QPushButton::clicked, this, &BirdHouse::initializationPoolFunc);
+	connect(ui.pushButtonRefresh, &QPushButton::clicked, this, &BirdHouse::sendJSONtoServer);
 
 	QMainWindow::setStatusBar(sBar);
 
 	myGenParam->setWindowIcon(QIcon("iconParam.png"));
 
 	refreshSettingInBirdHouse();
-	initializationPoolFunc();
-
-	getTokenFromFile();
-
 }
 
 
 void BirdHouse::addItemInList()
 {
-	QTreeWidgetItem* any = new QTreeWidgetItem();
+	QTreeWidgetItem* any = nullptr;
 
-	ui.treeWidget->addTopLevelItem(any);
-
-	countOfTopItems = ui.treeWidget->topLevelItemCount();
+	if (ui.treeWidget->currentItem() == nullptr)
+	{
+		any = new QTreeWidgetItem(ui.treeWidget);
+	}
+	else
+	{
+		if (ui.treeWidget->currentItem()->parent() == nullptr)
+			any = new QTreeWidgetItem(ui.treeWidget->currentItem());
+		else
+			return;
+	}
 
 	int column = ui.treeWidget->currentColumn();
 
 	offChanger = true;
-
-	any->setText(0, mBird_number);
-	any->setText(1, mBird_mail);
-	any->setText(2, mBird_phone);
+	
+	any->setText(0, any->parent() != nullptr ? QString::number(any->parent()->indexOfChild(any) + 1) : QString::number(lastNumberForTask + ui.treeWidget->indexOfTopLevelItem(any)));
+	any->setText(1, "");
+	any->setText(2, "");
 
 	any->setBackground(0, QColor(221, 221, 221, 255));
-	any->setBackground(1, QColor(245, 216, 183, 255));
-	any->setBackground(2, QColor(217, 225, 187, 255));
-	any->setCheckState(3, any->checkState(3));
-	any->setCheckState(4, any->checkState(4));
-
-	any->setCheckState(5, any->checkState(5));
-	any->setCheckState(6, any->checkState(6));
-	any->setText(7, mBird_date);
-	any->setText(8, mBird_time);
-	any->setText(9, mBird_text);
+	any->setBackground(1, any->parent() != nullptr ? QColor(245, 216, 183, 255) : QColor(232, 232, 232, 255));
+	any->setBackground(2, any->parent() != nullptr ? QColor(217, 225, 187, 255) : QColor(213, 213, 213, 255));
+	any->setCheckState(3, any->parent() != nullptr ? any->parent()->checkState(3) : any->checkState(3));
+	any->setCheckState(4, any->parent() != nullptr ? any->parent()->checkState(4) : any->checkState(4));
+	any->setCheckState(5, any->parent() != nullptr ? any->parent()->checkState(5) : any->checkState(5));
+	any->setCheckState(6, any->parent() != nullptr ? any->parent()->checkState(6) : any->checkState(6));
+	any->setText(7, any->parent() != nullptr ? any->parent()->text(7) : "");
+	any->setText(8, any->parent() != nullptr ? any->parent()->text(8) : "");
+	any->setText(9, any->parent() != nullptr ? any->parent()->text(9) : "");
 
 	any->setBackground(7, QColor(119, 168, 142, 255));
 	any->setBackground(8, QColor(79, 168, 142, 255));
@@ -87,9 +90,32 @@ void BirdHouse::addItemInList()
 void BirdHouse::deleteItemInList()
 {
 	if (ui.treeWidget->currentItem() == nullptr) return;
-	countOfTopItems = ui.treeWidget->topLevelItemCount();
 
-	ui.treeWidget->takeTopLevelItem(ui.treeWidget->indexOfTopLevelItem(ui.treeWidget->currentItem()));
+	QTreeWidgetItem* taked = ui.treeWidget->currentItem();
+	QTreeWidgetItem* temp = nullptr;
+	QTreeWidgetItem* parent = taked->parent();
+
+	if (taked->parent() == nullptr)
+	{
+		ui.treeWidget->takeTopLevelItem(ui.treeWidget->indexOfTopLevelItem(taked));
+
+		for (int countChild = 0; countChild < ui.treeWidget->topLevelItemCount(); countChild++)
+		{
+			ui.treeWidget->topLevelItem(countChild)->setText(0, QString::number(lastNumberForTask + countChild));
+		}
+	}
+	else
+	{
+		parent->takeChild(parent->indexOfChild(taked));
+
+		if (parent->childCount() == 0) return;
+
+		for (int countChild = 0; countChild < parent->childCount(); countChild++)
+		{
+			temp = parent->child(countChild);
+			temp->setText(0, QString::number(parent->indexOfChild(temp) + 1));
+		}
+	}
 }
 
 
@@ -98,7 +124,7 @@ void BirdHouse::setData() // в случае двойного клика в яч
 	QTreeWidgetItem* any = ui.treeWidget->currentItem(); // присваиваем указателю выбранную ячейку
 	int column = ui.treeWidget->currentColumn(); // присваиваем переменной номер текущего столбца (отсчёт начинается с 0-ого)
 
-	if (column == 0 || column == 3 || column == 4 || column == 5 || column == 6) return; // не даём редактировать дальше третьего столбца            
+	if (column == 0 || column == 3 || column == 4 || column == 5 || column == 6 || (any->parent() == nullptr ? (column == 1 || column == 2) : column == 0)) return; // не даём редактировать дальше третьего столбца            
 
 	middleColumn = column;
 	middleItem = any;
@@ -243,39 +269,6 @@ void BirdHouse::mousePressEvent(QMouseEvent* event)
 
 
 
-void BirdHouse::initializationPoolFunc()
-{
-	countOfTopItems = ui.treeWidget->topLevelItemCount();
-
-	for (int count = 0; count < countOfTopItems; count++)
-	{
-		if ((ui.treeWidget->topLevelItem(count)->text(1).toStdString().length() > 40) || (ui.treeWidget->topLevelItem(count)->text(1).toStdString().length() < 5))
-		{
-			ui.treeWidget->topLevelItem(count)->setText(1, "");
-		}
-
-		if (ui.treeWidget->topLevelItem(count)->text(2).toInt() < 11 || ui.treeWidget->topLevelItem(count)->text(2).toInt() > 12)
-		{
-			ui.treeWidget->topLevelItem(count)->setText(2, "");
-		}
-
-		if (!ui.treeWidget->topLevelItem(count)->text(7).isEmpty())
-		{
-			validDate(ui.treeWidget->topLevelItem(count));
-		}
-
-		if (!ui.treeWidget->topLevelItem(count)->text(8).isEmpty())
-		{
-			validTime(ui.treeWidget->topLevelItem(count));
-		}
-
-		if ((ui.treeWidget->topLevelItem(count)->text(9).length() < 5 && (!ui.treeWidget->topLevelItem(count)->text(1).isEmpty() || !ui.treeWidget->topLevelItem(count)->text(2).isEmpty())) || ui.treeWidget->topLevelItem(count)->text(9).length() > 150 && (!ui.treeWidget->topLevelItem(count)->text(1).isEmpty() || !ui.treeWidget->topLevelItem(count)->text(2).isEmpty()))
-		{
-			ui.treeWidget->topLevelItem(count)->setText(9, "Обратитесь в Горэлектросеть касательно будущего отключения электроэнергии");
-		}
-	}
-}
-
 void BirdHouse::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::ActivationReason::DoubleClick)
@@ -292,6 +285,7 @@ void BirdHouse::iconActivated(QSystemTrayIcon::ActivationReason reason)
 		}
 	}
 }
+
 
 
 void BirdHouse::cmdOpen()
@@ -349,32 +343,6 @@ void BirdHouse::validDate(QTreeWidgetItem* str)
 
 
 
-void BirdHouse::getTokenFromFile()
-{
-	QFile file(QCoreApplication::applicationDirPath() + "\\token.txt");
-
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		sBar->showMessage("Don't find browse file. Add a directory with a token (token.txt).", 10000);
-		return;
-	}
-
-	QTextStream out(&file);
-
-	QString myLine = out.readLine(); // метод readLine() считывает одну строку из потока
-
-	if (myLine == "")
-	{
-		sBar->showMessage("Don't find browse file. Add a directory with a token (token.txt).", 10000);
-		file.close();
-		return;
-	}
-
-	file.close();
-}
-
-
-
 void BirdHouse::showGeneralParam()
 {
 	myGenParam->show();
@@ -393,4 +361,13 @@ void BirdHouse::refreshSettingInBirdHouse()
 	mBird_time = myGenParam->m_telegramLine;
 	mBird_text = myGenParam->m_list;
 	mBird_rowHead = myGenParam->m_rowHead;
+}
+
+
+
+
+void BirdHouse::sendJSONtoServer()
+{
+
+	emit giveObjectToConvertInJson(ui.treeWidget->currentItem());
 }

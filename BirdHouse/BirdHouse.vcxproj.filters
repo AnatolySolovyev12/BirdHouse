@@ -46,12 +46,24 @@
     <ClCompile Include="GeneralParam.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TcpSocketClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonFormatingClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GeneralClass.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="GeneralParam.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="TcpSocketClass.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="JsonFormatingClass.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

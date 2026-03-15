@@ -31,7 +31,7 @@ public:
 
 
     void mousePressEvent(QMouseEvent* event);
-    void initializationPoolFunc();
+    void sendJSONtoServer();
     void validTime(QTreeWidgetItem* val);
     void validDate(QTreeWidgetItem* str);
 
@@ -42,12 +42,13 @@ public:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void cmdOpen();
     void cmdClose();
-
-    void getTokenFromFile();
-
     void showGeneralParam();
-
     void refreshSettingInBirdHouse();
+
+
+signals:
+    void giveObjectToConvertInJson(QTreeWidgetItem* any);
+
 
 private:
     Ui::BirdHouseClass ui;
@@ -71,6 +72,8 @@ private:
 
     GeneralParam* myGenParam = nullptr;
 
+    int lastNumberForTask = 12;
+
     QString mBird_number = "new";
     QString mBird_mail = "path";
     QString mBird_phone = "15";
@@ -80,4 +83,4 @@ private:
     QString mBird_time;
     QString mBird_text = "1";
     QString mBird_rowHead = "1";
-};
+}; 

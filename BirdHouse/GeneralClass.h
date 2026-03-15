@@ -2,6 +2,8 @@
 
 #include <QObject>
 #include "BirdHouse.h"
+#include "TcpSocketClass.h"
+#include "JsonFormatingClass.h"
 
 class GeneralClass  : public QObject
 {
@@ -14,5 +16,7 @@ public:
 
 private:
 	BirdHouse* birdHouseClass = nullptr;
+	TcpSocketClass* tcpSocketClass = nullptr;
+	JsonFormatingClass* reFormatJsonClass = nullptr;
 };
 
