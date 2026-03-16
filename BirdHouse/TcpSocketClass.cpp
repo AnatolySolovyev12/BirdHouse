@@ -8,14 +8,13 @@ TcpSocketClass::TcpSocketClass(QObject* parent)
 	connect(mTcpSocket, &QTcpSocket::readyRead, this, &TcpSocketClass::onReadyRead);
 	connect(mTcpSocket, &QTcpSocket::errorOccurred, this, &TcpSocketClass::onErrorOccurred);
 
-	connect(timerForCheckSending, &QTimer::timeout, this, [this]() {
+	connect(timerForCheckSending, &QTimer::timeout, [this]() {
 
 		resendingCounter++;
 
-		qDebug() << "\nNOT ALL ALRIGHT. Start resending last messege (trying #" + resendingCounter + ')\n';
-
-		if (resendingCounter < 3)
+		if (resendingCounter <= 3)
 		{
+			qDebug() << "NOT ALL ALRIGHT. Start resending last messege (trying #" + QString::number(resendingCounter) + ')';
 			mTcpSocket->close();
 			QTimer::singleShot(100, [&]() {	connectToServer(tempBufferForLastMessege); });
 		}
@@ -24,6 +23,7 @@ TcpSocketClass::TcpSocketClass(QObject* parent)
 			mTcpSocket->close();
 			timerForCheckSending->stop();
 			resendingCounter = 0;
+			qDebug() << "Check your network connection to server";
 		}
 
 		});
