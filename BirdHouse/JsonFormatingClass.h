@@ -18,5 +18,9 @@ public:
 	~JsonFormatingClass();
 
 	void reFormat(QTreeWidget* val);
+
+signals:
+	void sendJsonToServer(QByteArray QByteArray);
+
 };
 

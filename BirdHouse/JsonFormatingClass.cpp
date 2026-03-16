@@ -54,8 +54,8 @@ void JsonFormatingClass::reFormat(QTreeWidget* val)
 
 	doc.setArray(arrayOfTask);
 	QByteArray bytes = doc.toJson(QJsonDocument::Compact); // или Indented
-	std::cout << bytes.constData() << std::endl;
 
+	emit sendJsonToServer(bytes);
 
 	//doc.setObject(taskObject);
 

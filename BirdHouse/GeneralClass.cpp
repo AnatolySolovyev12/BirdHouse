@@ -5,6 +5,7 @@ GeneralClass::GeneralClass(QObject *parent)
 {
 	birdHouseClass->show();
 	connect(birdHouseClass, &BirdHouse::giveObjectToConvertInJson, reFormatJsonClass, &JsonFormatingClass::reFormat);
+	connect(reFormatJsonClass, &JsonFormatingClass::sendJsonToServer, tcpSocketClass, &TcpSocketClass::connectToServer);
 		
 }
 

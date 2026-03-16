@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <qtimer.h>
 
 class TcpSocketClass  : public QObject
 {
@@ -12,7 +13,7 @@ public:
 	~TcpSocketClass();
 
 public slots:
-	void connectToServer(QString messege);
+	void connectToServer(QByteArray messege);
 
 
 private slots:
@@ -25,8 +26,10 @@ private slots:
 private:
 	QTcpSocket* mTcpSocket = nullptr;
 	bool connectedState = false;
-	QByteArray tempMessege;
 	const QString host = "127.0.0.1";
 	quint16 port = 49555;
+	QTimer* timerForCheckSending;
+	int resendingCounter = 0;
+	QByteArray tempBufferForLastMessege;
 };
 
