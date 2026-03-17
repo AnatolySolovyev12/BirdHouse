@@ -44,7 +44,7 @@ void TcpSocketClass::connectToServer(QByteArray messege)
 	if (!mTcpSocket->isOpen())
 	{
 		mTcpSocket->connectToHost(QHostAddress(host), port);
-		qDebug() << "Connect to " + QHostAddress(host).toString();
+		qDebug() << '\n' << "Connect to " + QHostAddress(host).toString();
 	}
 
 	timerForCheckSending->start(5000);
@@ -78,7 +78,6 @@ void TcpSocketClass::onReadyRead()
 
 	if (data.constData() == QByteArray("OK"))
 	{
-		qDebug() << "ALL ALRIGHT";
 		timerForCheckSending->stop();
 		resendingCounter = 0;
 

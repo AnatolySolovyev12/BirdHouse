@@ -9,16 +9,16 @@ JsonFormatingClass::~JsonFormatingClass()
 {
 }
 
-void JsonFormatingClass::reFormat(QTreeWidget* val)
+void JsonFormatingClass::reFormat(QTreeWidget* val, int idUser)
 {
 	QJsonDocument doc;
-
-	QJsonArray messageArray;
-	QJsonObject taskObject;
 	QJsonArray arrayOfTask;
 
 	for (int count = 0; count < val->topLevelItemCount(); count++)
 	{
+
+		QJsonArray messageArray;
+
 		QTreeWidgetItem* parentTop = val->topLevelItem(count);
 
 		for (int countChild = 0; countChild < parentTop->childCount(); countChild++)
@@ -44,20 +44,18 @@ void JsonFormatingClass::reFormat(QTreeWidget* val)
 
 		QJsonObject taskObject
 		{
-		  
 		   { "messegeArray", messageArray },
-			{ "numberTask", parentTop->text(0) }
+			{ "numberTask", parentTop->text(0) },
+			{ "userId", QString::number(idUser) }
 		};
 
 		arrayOfTask.push_back(taskObject);
+
+		doc.setArray(arrayOfTask);
 	}
 
-	doc.setArray(arrayOfTask);
+
 	QByteArray bytes = doc.toJson(QJsonDocument::Compact); // или Indented
 
 	emit sendJsonToServer(bytes);
-
-	//doc.setObject(taskObject);
-
-	//qDebug() << doc.toJson();
 }

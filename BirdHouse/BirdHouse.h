@@ -47,7 +47,7 @@ public:
 
 
 signals:
-    void giveObjectToConvertInJson(QTreeWidget* any);
+    void giveObjectToConvertInJson(QTreeWidget* any, int idUser);
 
 
 private:
@@ -72,7 +72,9 @@ private:
 
     GeneralParam* myGenParam = nullptr;
 
-    int lastNumberForTask = 12;
+    int lastNumberForTask = 12;///////////
+    int idUser = 1;/////////
+
 
     QString mBird_number = "new";
     QString mBird_mail = "path";
