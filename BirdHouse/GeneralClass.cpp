@@ -1,14 +1,35 @@
 ﻿#include "GeneralClass.h"
 
 GeneralClass::GeneralClass(QObject *parent)
-	: QObject(parent), birdHouseClass(new BirdHouse), tcpSocketClass(new TcpSocketClass), reFormatJsonClass(new JsonFormatingClass)
+	: QObject(parent), birdHouseClass(new BirdHouse), tcpSocketClass(new TcpSocketClass), reFormatJsonClass(new JsonFormatingClass), authClass(new AuthClass)
 {
-	birdHouseClass->show();
+	authClass->show();
+	
 	connect(birdHouseClass, &BirdHouse::giveObjectToConvertInJson, reFormatJsonClass, &JsonFormatingClass::reFormat);
 	connect(reFormatJsonClass, &JsonFormatingClass::sendJsonToServer, tcpSocketClass, &TcpSocketClass::connectToServer);
-		
+	connect(authClass, &AuthClass::showBirdMainWindows, this, &GeneralClass::showBirdWindow);
+	connect(authClass, &AuthClass::verifySignal, tcpSocketClass, [&](QByteArray jdoc, QString serverAdress, quint16 serverPort) {
+		tcpSocketClass->setIpPort(serverAdress, serverPort);
+		tcpSocketClass->connectToServer(jdoc);
+		});
+
+	connect(this, &GeneralClass::userAndTask, birdHouseClass, &BirdHouse::setIdAndLastTask);
+
+	connect(tcpSocketClass, &TcpSocketClass::accessAllowed, [this](QString iduser, QString lastTask) {
+		emit this->userAndTask(iduser, lastTask);
+		this->showBirdWindow();
+		});
 }
+
+
 
 GeneralClass::~GeneralClass()
 {}
 
+
+
+void GeneralClass::showBirdWindow()
+{
+	authClass->hide();
+	birdHouseClass->show();
+}

@@ -1,6 +1,6 @@
 ﻿#include "BirdHouse.h"
 
-BirdHouse::BirdHouse(QWidget * parent)
+BirdHouse::BirdHouse(QWidget* parent)
 	: QMainWindow(parent), sBar(new QStatusBar()), myGenParam(new GeneralParam)
 {
 	ui.setupUi(this);
@@ -61,7 +61,7 @@ void BirdHouse::addItemInList()
 	int column = ui.treeWidget->currentColumn();
 
 	offChanger = true;
-	
+
 	any->setText(0, any->parent() != nullptr ? QString::number(any->parent()->indexOfChild(any) + 1) : QString::number(lastNumberForTask + ui.treeWidget->indexOfTopLevelItem(any)));
 	any->setText(1, "");
 	any->setText(2, "");
@@ -365,8 +365,15 @@ void BirdHouse::refreshSettingInBirdHouse()
 
 
 
-
 void BirdHouse::sendJSONtoServer()
 {
 	emit giveObjectToConvertInJson(ui.treeWidget, idUser);
+}
+
+
+
+void BirdHouse::setIdAndLastTask(QString id, QString task)
+{
+	idUser = id.toInt();
+	lastNumberForTask = (task.toInt() + 1);
 }

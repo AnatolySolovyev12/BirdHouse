@@ -37,6 +37,16 @@ TcpSocketClass::~TcpSocketClass()
 	}
 }
 
+
+
+void TcpSocketClass::setIpPort(QString ipSet, quint16 portSet)
+{
+	host = ipSet;
+	port = portSet;
+}
+
+
+
 void TcpSocketClass::connectToServer(QByteArray messege)
 {
 	tempBufferForLastMessege = messege;
@@ -80,15 +90,40 @@ void TcpSocketClass::onReadyRead()
 	{
 		timerForCheckSending->stop();
 		resendingCounter = 0;
-
-		mTcpSocket->close();
+		if (!authBool)
+			mTcpSocket->close();
 	}
 
 	if (data.constData() == QByteArray("RESEND"))
 	{
 		qDebug() << "CRC IS NOT CORRECT";
 	}
+
+	if (data.constData() == QByteArray("status"))
+	{
+		QJsonDocument jDoc = QJsonDocument::fromJson(data.constData());
+
+		if (jDoc.isNull()) {
+			qDebug() << "JSON parse error in TcpSocketClass::onReadyRead()";
+			mTcpSocket->close();
+			return;
+		}
+		else
+		{
+			QJsonObject rootArray = jDoc.object();
+
+			if (rootArray["status"].toString() == "ACCESS")
+			{
+				emit accessAllowed(rootArray["userId"].toString(), rootArray["lastTask"].toString());
+			}
+
+			timerForCheckSending->stop();
+			resendingCounter = 0;
+			authBool = false;
+		}
+	}
 }
+
 
 
 void TcpSocketClass::onErrorOccurred(QAbstractSocket::SocketError socketError)

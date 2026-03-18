@@ -4,6 +4,7 @@
 #include "BirdHouse.h"
 #include "TcpSocketClass.h"
 #include "JsonFormatingClass.h"
+#include "AuthClass.h"
 
 class GeneralClass  : public QObject
 {
@@ -13,10 +14,16 @@ public:
 	GeneralClass(QObject* parent = nullptr);
 	~GeneralClass();
 
+	void showBirdWindow();
+
+signals:
+	void userAndTask(QString id, QString task);
+
 
 private:
 	BirdHouse* birdHouseClass = nullptr;
 	TcpSocketClass* tcpSocketClass = nullptr;
 	JsonFormatingClass* reFormatJsonClass = nullptr;
+	AuthClass* authClass = nullptr;
 };
 

@@ -45,6 +45,8 @@ public:
     void showGeneralParam();
     void refreshSettingInBirdHouse();
 
+    void setIdAndLastTask(QString id, QString task);
+
 
 signals:
     void giveObjectToConvertInJson(QTreeWidget* any, int idUser);
@@ -72,9 +74,8 @@ private:
 
     GeneralParam* myGenParam = nullptr;
 
-    int lastNumberForTask = 12;///////////
-    int idUser = 1;/////////
-
+    int lastNumberForTask = 12;
+    int idUser = 1;
 
     QString mBird_number = "new";
     QString mBird_mail = "path";
