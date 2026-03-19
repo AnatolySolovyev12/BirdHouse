@@ -13,6 +13,8 @@ AuthClass::AuthClass(QWidget* parent)
 	readDefaulWindowParams();
 }
 
+
+
 AuthClass::~AuthClass()
 {
 }
@@ -44,6 +46,7 @@ void AuthClass::sendSignalToShowBird()
 {
 	emit showBirdMainWindows();
 }
+
 
 
 void AuthClass::setStatusBarMessege(QString text)
@@ -114,6 +117,16 @@ bool AuthClass::createTable()
 
 void AuthClass::readDefaulWindowParams()
 {
+	QFile tempForCheckDb;
+	tempForCheckDb.setFileName("defaultParamsForAuth");
+	bool tempForCreateTable = true;
+
+	if (!tempForCheckDb.exists())
+	{
+		qDebug() << "Error in AuthClass::readDefaulWindowParams() because not found authWindowParams file";
+		return;
+	}
+
 	QSqlQuery query(mainConnection);
 	QString queryString = ("SELECT * FROM authWindowParams;");
 
@@ -143,6 +156,16 @@ void AuthClass::readDefaulWindowParams()
 
 void AuthClass::writeDefaulWindowParams()
 {
+	QFile tempForCheckDb;
+	tempForCheckDb.setFileName("defaultParamsForAuth");
+	bool tempForCreateTable = true;
+
+	if (!tempForCheckDb.exists())
+	{
+		qDebug() << "Error in AuthClass::writeDefaulWindowParams() because not found authWindowParams file";
+		return;
+	}
+
 	QSqlQuery query(mainConnection);
 	QString queryString = ("SELECT * FROM authWindowParams;");
 
