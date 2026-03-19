@@ -19,6 +19,8 @@ GeneralClass::GeneralClass(QObject *parent)
 		emit this->userAndTask(iduser, lastTask);
 		this->showBirdWindow();
 		});
+
+	connect(tcpSocketClass, &TcpSocketClass::statusBarMessege, authClass, &AuthClass::setStatusBarMessege);
 }
 
 

@@ -18,6 +18,7 @@
 
 #include <QDate>
 
+
 class BirdHouse : public QMainWindow
 {
     Q_OBJECT
@@ -43,7 +44,6 @@ public:
     void cmdOpen();
     void cmdClose();
     void showGeneralParam();
-    void refreshSettingInBirdHouse();
 
     void setIdAndLastTask(QString id, QString task);
 
@@ -65,7 +65,7 @@ private:
 
     QString line;
 
-    int countOfTopItems;
+    int countOfTopItems = 0;
 
     QSystemTrayIcon* trayIcon = nullptr;
     QDateTime fullTimeWork;
@@ -74,16 +74,7 @@ private:
 
     GeneralParam* myGenParam = nullptr;
 
-    int lastNumberForTask = 12;
+    int lastNumberForTask = 1;
     int idUser = 1;
 
-    QString mBird_number = "new";
-    QString mBird_mail = "path";
-    QString mBird_phone = "15";
-    QString mBird_timeLine = "07:00:00";
-    QString mBird_rowLine = "1";
-    QString mBird_date = "1";
-    QString mBird_time;
-    QString mBird_text = "1";
-    QString mBird_rowHead = "1";
 }; 

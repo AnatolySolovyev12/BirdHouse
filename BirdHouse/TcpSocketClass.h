@@ -17,11 +17,20 @@ public:
 
 	void setIpPort(QString ipSet, quint16 portSet);
 
+
+
+
 signals:
 	void accessAllowed(QString iduser, QString lastTask);
+	void statusBarMessege(QString text);
+
+
+
+
 
 public slots:
 	void connectToServer(QByteArray messege);
+
 
 private slots:
 
@@ -29,6 +38,7 @@ private slots:
 	void onDisconnected();
 	void onReadyRead();
 	void onErrorOccurred(QAbstractSocket::SocketError socketError);
+
 
 private:
 	QTcpSocket* mTcpSocket = nullptr;

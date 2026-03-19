@@ -6,7 +6,6 @@ BirdHouse::BirdHouse(QWidget* parent)
 	ui.setupUi(this);
 
 	connect(ui.pushButtonSetting, &QPushButton::clicked, this, &BirdHouse::showGeneralParam);
-	connect(myGenParam, &GeneralParam::refreshSetting, this, &BirdHouse::refreshSettingInBirdHouse);
 
 	trayIcon = new QSystemTrayIcon(this);
 	trayIcon->setIcon(QIcon("icon.png"));
@@ -37,8 +36,6 @@ BirdHouse::BirdHouse(QWidget* parent)
 	QMainWindow::setStatusBar(sBar);
 
 	myGenParam->setWindowIcon(QIcon("iconParam.png"));
-
-	refreshSettingInBirdHouse();
 }
 
 
@@ -349,22 +346,6 @@ void BirdHouse::showGeneralParam()
 }
 
 
-
-void BirdHouse::refreshSettingInBirdHouse()
-{
-	mBird_number = myGenParam->m_name;
-	mBird_mail = myGenParam->m_directory;
-	mBird_phone = myGenParam->m_deadlineLine;
-	mBird_timeLine = myGenParam->m_timeLine;
-	mBird_rowLine = myGenParam->m_rowLine;
-	mBird_date = myGenParam->m_columnLine;
-	mBird_time = myGenParam->m_telegramLine;
-	mBird_text = myGenParam->m_list;
-	mBird_rowHead = myGenParam->m_rowHead;
-}
-
-
-
 void BirdHouse::sendJSONtoServer()
 {
 	emit giveObjectToConvertInJson(ui.treeWidget, idUser);
@@ -377,3 +358,8 @@ void BirdHouse::setIdAndLastTask(QString id, QString task)
 	idUser = id.toInt();
 	lastNumberForTask = (task.toInt() + 1);
 }
+
+
+
+
+

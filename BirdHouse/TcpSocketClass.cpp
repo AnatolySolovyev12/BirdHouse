@@ -90,8 +90,7 @@ void TcpSocketClass::onReadyRead()
 	{
 		timerForCheckSending->stop();
 		resendingCounter = 0;
-		if (!authBool)
-			mTcpSocket->close();
+		mTcpSocket->close();
 	}
 
 	if (data.constData() == QByteArray("RESEND"))
@@ -99,14 +98,13 @@ void TcpSocketClass::onReadyRead()
 		qDebug() << "CRC IS NOT CORRECT";
 	}
 
-	if (data.constData() == QByteArray("status"))
+	if (data.contains("status"))
 	{
 		QJsonDocument jDoc = QJsonDocument::fromJson(data.constData());
 
 		if (jDoc.isNull()) {
 			qDebug() << "JSON parse error in TcpSocketClass::onReadyRead()";
 			mTcpSocket->close();
-			return;
 		}
 		else
 		{
@@ -116,10 +114,20 @@ void TcpSocketClass::onReadyRead()
 			{
 				emit accessAllowed(rootArray["userId"].toString(), rootArray["lastTask"].toString());
 			}
+			if (rootArray["status"].toString() == "ERROR")
+			{
+				emit statusBarMessege("Error when try to auth");
+			}
+			if (rootArray["status"].toString() == "NOTFOUNDUSER")
+			{
+				emit statusBarMessege("Not found this user in DB");
+			}
 
 			timerForCheckSending->stop();
 			resendingCounter = 0;
 			authBool = false;
+
+			mTcpSocket->close();
 		}
 	}
 }
