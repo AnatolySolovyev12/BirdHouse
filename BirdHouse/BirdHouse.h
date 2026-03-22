@@ -15,6 +15,7 @@
 #include <windows.h>
 
 #include "GeneralParam.h"
+#include <qtimer.h>
 
 #include <QDate>
 
@@ -46,6 +47,8 @@ public:
     void showGeneralParam();
 
     void setIdAndLastTask(QString id, QString task);
+
+    void updateTasks();
 
 
 signals:

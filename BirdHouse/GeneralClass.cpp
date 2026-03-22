@@ -21,6 +21,7 @@ GeneralClass::GeneralClass(QObject *parent)
 		});
 
 	connect(tcpSocketClass, &TcpSocketClass::statusBarMessege, authClass, &AuthClass::setStatusBarMessege);
+	connect(tcpSocketClass, &TcpSocketClass::updateTaskAndOnInterface, birdHouseClass, &BirdHouse::updateTasks);
 }
 
 

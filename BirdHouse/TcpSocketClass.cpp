@@ -91,6 +91,8 @@ void TcpSocketClass::onReadyRead()
 		timerForCheckSending->stop();
 		resendingCounter = 0;
 		mTcpSocket->close();
+
+		emit updateTaskAndOnInterface();
 	}
 
 	if (data.constData() == QByteArray("RESEND"))
