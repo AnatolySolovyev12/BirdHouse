@@ -6,6 +6,8 @@ AuthClass::AuthClass(QWidget* parent)
 	ui.setupUi(this);
 
 	connect(ui.enterButton, &QPushButton::clicked, this, &AuthClass::logginFunc);
+	connect(ui.registerButton, &QPushButton::clicked, this, &AuthClass::regButtonPushed);
+
 
 	if (sqliteFunc())
 		createTable();
@@ -30,6 +32,7 @@ void AuthClass::logginFunc()
 
 	QJsonObject verifyObj
 	{
+		{ "auth", "true" },
 		{ "login", ui.loginLine->text() },
 		{ "password", ui.passLine->text() }
 	};
@@ -218,3 +221,7 @@ void AuthClass::writeDefaulWindowParams()
 
 
 
+void AuthClass::regButtonPushed()
+{
+	emit enterInRegClass();
+}

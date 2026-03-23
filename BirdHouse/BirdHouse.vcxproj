@@ -60,6 +60,7 @@
   <ItemGroup>
     <ClCompile Include="AuthClass.cpp" />
     <ClCompile Include="JsonFormatingClass.cpp" />
+    <ClCompile Include="RegClass.cpp" />
     <ClCompile Include="TcpSocketClass.cpp" />
     <QtRcc Include="BirdHouse.qrc" />
     <QtUic Include="AuthClass.ui" />
@@ -73,6 +74,7 @@
     <ClCompile Include="GeneralParam.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="GeneralParam.ui" />
+    <QtUic Include="RegClass.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GeneralClass.h" />
@@ -88,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="AuthClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="RegClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

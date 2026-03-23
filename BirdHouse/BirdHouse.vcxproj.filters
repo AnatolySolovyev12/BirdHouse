@@ -55,6 +55,9 @@
     <ClCompile Include="AuthClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RegClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GeneralClass.h">
@@ -72,12 +75,18 @@
     <QtMoc Include="AuthClass.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="RegClass.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="GeneralParam.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="AuthClass.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="RegClass.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

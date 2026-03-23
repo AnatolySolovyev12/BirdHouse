@@ -10,7 +10,7 @@ GeneralParam::GeneralParam(QWidget* parent)
 	connect(ui.exitBtn, SIGNAL(clicked()), this, SLOT(close()));
 	connect(ui.saveAllBtn, SIGNAL(clicked()), this, SLOT(writeCurrent()));
 
-	readDefaultConfig();
+	//readDefaultConfig();
 }
 
 

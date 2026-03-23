@@ -24,6 +24,7 @@ signals:
 	void accessAllowed(QString iduser, QString lastTask);
 	void statusBarMessege(QString text);
 	void updateTaskAndOnInterface();
+	void checkCodeInMail();
 
 
 

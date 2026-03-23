@@ -124,11 +124,15 @@ void TcpSocketClass::onReadyRead()
 			{
 				emit statusBarMessege("Not found this user in DB");
 			}
+			if (rootArray["status"].toString() == "REGISTER")
+			{
+				emit checkCodeInMail();
+			}
+
 
 			timerForCheckSending->stop();
 			resendingCounter = 0;
 			authBool = false;
-
 			mTcpSocket->close();
 		}
 	}

@@ -32,10 +32,13 @@ public:
 	void readDefaulWindowParams();
 	void writeDefaulWindowParams();
 
+	void regButtonPushed();
+
 
 signals:
 	void showBirdMainWindows();
 	void verifySignal(QByteArray jdoc, QString serverAdress, quint16 serverPort);
+	void enterInRegClass();
 
 private:
 	Ui::AuthClassClass ui;

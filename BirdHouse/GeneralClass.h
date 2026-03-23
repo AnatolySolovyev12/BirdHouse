@@ -5,6 +5,7 @@
 #include "TcpSocketClass.h"
 #include "JsonFormatingClass.h"
 #include "AuthClass.h"
+#include "RegClass.h"
 
 class GeneralClass  : public QObject
 {
@@ -25,5 +26,6 @@ private:
 	TcpSocketClass* tcpSocketClass = nullptr;
 	JsonFormatingClass* reFormatJsonClass = nullptr;
 	AuthClass* authClass = nullptr;
+	RegClass* regClass = nullptr;
 };
 
