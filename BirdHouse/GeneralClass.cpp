@@ -23,6 +23,7 @@ GeneralClass::GeneralClass(QObject *parent)
 	connect(regClass, &RegClass::sendCodeMailSignal, tcpSocketClass, [&](QByteArray jdoc, QString serverAdress, quint16 serverPort) {
 		tcpSocketClass->setIpPort(serverAdress, serverPort);
 		tcpSocketClass->connectToServer(jdoc);
+		qDebug() << "CODE WAS SEND";
 		});
 
 

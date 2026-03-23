@@ -7,7 +7,7 @@ RegClass::RegClass(QWidget* parent)
 
 	connect(ui.exitButton, &QPushButton::clicked, this, &RegClass::exitFunc);
 	connect(ui.regButton, &QPushButton::clicked, this, &RegClass::registerFunc);
-	connect(ui.regButton, &QPushButton::clicked, this, &RegClass::codeMailSendFunc);
+	connect(ui.enterButton, &QPushButton::clicked, this, &RegClass::codeMailSendFunc);
 
 	ui.codeLine->hide();
 	ui.enterButton->hide();
@@ -90,7 +90,7 @@ void RegClass::codeMailSendFunc()
 
 	QJsonObject verifyObj
 	{
-		{ "registerCode", "true" },
+		{ "CodeForReg", "true" },
 		{ "login", ui.loginLine->text() },
 		{ "password", ui.passLine->text() },
 		{ "codeMail", ui.codeLine->text() }
