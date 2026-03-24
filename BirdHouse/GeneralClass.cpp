@@ -23,13 +23,14 @@ GeneralClass::GeneralClass(QObject *parent)
 	connect(regClass, &RegClass::sendCodeMailSignal, tcpSocketClass, [&](QByteArray jdoc, QString serverAdress, quint16 serverPort) {
 		tcpSocketClass->setIpPort(serverAdress, serverPort);
 		tcpSocketClass->connectToServer(jdoc);
-		qDebug() << "CODE WAS SEND";
 		});
 
 
+	connect(this, &GeneralClass::setIpAndPortForRegClass, regClass, &RegClass::setLoginAndPassInUI);
 
-	connect(authClass, &AuthClass::enterInRegClass, [this]() {
+	connect(authClass, &AuthClass::enterInRegClass, [this](QString ipValue, QString portValue) {
 		authClass->hide();
+		emit setIpAndPortForRegClass(ipValue, portValue);
 		regClass->show();
 		});
 
@@ -48,6 +49,9 @@ GeneralClass::GeneralClass(QObject *parent)
 	connect(tcpSocketClass, &TcpSocketClass::statusBarMessege, authClass, &AuthClass::setStatusBarMessege);
 	connect(tcpSocketClass, &TcpSocketClass::updateTaskAndOnInterface, birdHouseClass, &BirdHouse::updateTasks);
 	connect(tcpSocketClass, &TcpSocketClass::checkCodeInMail, regClass, &RegClass::hideRegElement);
+	connect(tcpSocketClass, &TcpSocketClass::registerIsDoneSignal, regClass, &RegClass::exitFunc);
+	connect(tcpSocketClass, &TcpSocketClass::statusBarRegMessege, regClass, &RegClass::statusBarMessegeForRegCLass);
+
 
 
 }

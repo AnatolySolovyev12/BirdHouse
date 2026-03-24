@@ -49,7 +49,7 @@ void RegClass::registerFunc()
 
 	QJsonObject verifyObj
 	{
-		{ "register", "true" },
+		{ "$&register&$", "true" },
 		{ "login", ui.loginLine->text() },
 		{ "password", ui.passLine->text() }
 	};
@@ -79,7 +79,7 @@ void RegClass::hideRegElement()
 	ui.regButton->hide();
 
 
-	ui.statusBar->showMessage("Check password on your Email", 10000);
+	ui.statusBar->showMessage("Check code on your Email", 10000);
 }
 
 
@@ -90,7 +90,7 @@ void RegClass::codeMailSendFunc()
 
 	QJsonObject verifyObj
 	{
-		{ "CodeForReg", "true" },
+		{ "$&CodeForReg&$", "true" },
 		{ "login", ui.loginLine->text() },
 		{ "password", ui.passLine->text() },
 		{ "codeMail", ui.codeLine->text() }
@@ -100,6 +100,21 @@ void RegClass::codeMailSendFunc()
 	QByteArray bytes = doc.toJson(QJsonDocument::Compact);
 
 	emit registerSignal(bytes, ui.ipLine->text(), ui.portLine->text().toInt());
+}
+
+
+
+void RegClass::statusBarMessegeForRegCLass(QString text)
+{
+	ui.statusBar->showMessage(text, 10000);
+}
+
+
+
+void RegClass::setLoginAndPassInUI(QString ip, QString port)
+{
+	ui.ipLine->setText(ip);
+	ui.portLine->setText(port);
 }
 
 

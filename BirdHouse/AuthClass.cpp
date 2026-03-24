@@ -32,7 +32,7 @@ void AuthClass::logginFunc()
 
 	QJsonObject verifyObj
 	{
-		{ "auth", "true" },
+		{ "$&auth&$", "true" },
 		{ "login", ui.loginLine->text() },
 		{ "password", ui.passLine->text() }
 	};
@@ -223,5 +223,5 @@ void AuthClass::writeDefaulWindowParams()
 
 void AuthClass::regButtonPushed()
 {
-	emit enterInRegClass();
+	emit enterInRegClass(ui.ipLine->text(), ui.portLine->text());
 }

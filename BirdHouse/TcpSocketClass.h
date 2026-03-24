@@ -25,6 +25,8 @@ signals:
 	void statusBarMessege(QString text);
 	void updateTaskAndOnInterface();
 	void checkCodeInMail();
+	void registerIsDoneSignal();
+	void statusBarRegMessege(QString text);
 
 
 

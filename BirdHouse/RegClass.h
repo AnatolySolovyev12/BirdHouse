@@ -18,6 +18,8 @@ public:
 	void registerFunc();
 	void hideRegElement();
 	void codeMailSendFunc();
+	void statusBarMessegeForRegCLass(QString text);
+	void setLoginAndPassInUI(QString ip, QString port);
 
 signals:
 	void exitSignal();

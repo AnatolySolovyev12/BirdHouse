@@ -38,7 +38,7 @@ public:
 signals:
 	void showBirdMainWindows();
 	void verifySignal(QByteArray jdoc, QString serverAdress, quint16 serverPort);
-	void enterInRegClass();
+	void enterInRegClass(QString ip, QString port);
 
 private:
 	Ui::AuthClassClass ui;

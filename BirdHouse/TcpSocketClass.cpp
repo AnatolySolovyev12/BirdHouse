@@ -57,7 +57,8 @@ void TcpSocketClass::connectToServer(QByteArray messege)
 		qDebug() << '\n' << "Connect to " + QHostAddress(host).toString();
 	}
 
-	timerForCheckSending->start(5000);
+	if (!authBool)
+		timerForCheckSending->start(5000);
 }
 
 
@@ -68,7 +69,7 @@ void TcpSocketClass::onConnected()
 
 	qDebug() << "TX << " << tempBufferForLastMessege.constData();
 
-	mTcpSocket->write(tempBufferForLastMessege + "$" + QByteArray::number(tempBufferForLastMessege.length()));
+	mTcpSocket->write(tempBufferForLastMessege + "%" + QByteArray::number(tempBufferForLastMessege.length()));
 }
 
 
@@ -86,7 +87,7 @@ void TcpSocketClass::onReadyRead()
 
 	qDebug() << "RX << " << data.constData();
 
-	if (data.constData() == QByteArray("OK"))
+	if (data.constData() == QByteArray("$&OK&$") && !authBool)
 	{
 		timerForCheckSending->stop();
 		resendingCounter = 0;
@@ -95,7 +96,7 @@ void TcpSocketClass::onReadyRead()
 		emit updateTaskAndOnInterface();
 	}
 
-	if (data.constData() == QByteArray("RESEND"))
+	if (data.constData() == QByteArray("$&RESEND&$"))
 	{
 		qDebug() << "CRC IS NOT CORRECT";
 	}
@@ -112,27 +113,45 @@ void TcpSocketClass::onReadyRead()
 		{
 			QJsonObject rootArray = jDoc.object();
 
-			if (rootArray["status"].toString() == "ACCESS")
+			if (rootArray["status"].toString() == "$&ACCESS&$")
 			{
 				emit accessAllowed(rootArray["userId"].toString(), rootArray["lastTask"].toString());
+				authBool = false;
 			}
-			if (rootArray["status"].toString() == "ERROR")
+
+			if (rootArray["status"].toString() == "$&ERROR&$")
 			{
 				emit statusBarMessege("Error when try to auth");
 			}
-			if (rootArray["status"].toString() == "NOTFOUNDUSER")
+
+			if (rootArray["status"].toString() == "$&NOTFOUNDUSER&$")
 			{
 				emit statusBarMessege("Not found this user in DB");
 			}
-			if (rootArray["status"].toString() == "REGISTER")
+
+			if (rootArray["status"].toString() == "$&REGISTER&$")
 			{
 				emit checkCodeInMail();
 			}
 
+			if (rootArray["status"].toString() == "$&REGISTERISDONE&$")
+			{
+				emit registerIsDoneSignal();
+				emit statusBarMessege("Register is Done. Try Auth with new user");
+			}
+
+			if (rootArray["status"].toString() == "$&INCORRECTREGISTERCODE&$")
+			{
+				emit statusBarRegMessege("Try again send your actually code");
+			}
+
+			if (rootArray["status"].toString() == "$&USERREGISTEREARLIER&$")
+			{
+				emit statusBarRegMessege("User was register earlier. Try other user or auth");
+			}
 
 			timerForCheckSending->stop();
 			resendingCounter = 0;
-			authBool = false;
 			mTcpSocket->close();
 		}
 	}
