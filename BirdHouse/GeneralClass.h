@@ -7,7 +7,7 @@
 #include "AuthClass.h"
 #include "RegClass.h"
 
-class GeneralClass  : public QObject
+class GeneralClass : public QObject
 {
 	Q_OBJECT
 
@@ -29,4 +29,3 @@ private:
 	AuthClass* authClass = nullptr;
 	RegClass* regClass = nullptr;
 };
-

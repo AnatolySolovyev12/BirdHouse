@@ -19,12 +19,10 @@ GeneralClass::GeneralClass(QObject *parent)
 		tcpSocketClass->connectToServer(jdoc);
 		});
 
-
 	connect(regClass, &RegClass::sendCodeMailSignal, tcpSocketClass, [&](QByteArray jdoc, QString serverAdress, quint16 serverPort) {
 		tcpSocketClass->setIpPort(serverAdress, serverPort);
 		tcpSocketClass->connectToServer(jdoc);
 		});
-
 
 	connect(this, &GeneralClass::setIpAndPortForRegClass, regClass, &RegClass::setLoginAndPassInUI);
 

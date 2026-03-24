@@ -2,7 +2,7 @@
 //
 #pragma code_page(65001)
 
-#include "resource.h"
+#include "resource1.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,7 @@ LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 
 1 TEXTINCLUDE 
 BEGIN
-    "resource.h\0"
+    "resource1.h\0"
 END
 
 2 TEXTINCLUDE 
@@ -48,20 +48,12 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// PNG
-//
-
-IDB_PNG1                PNG                     "C:\\Users\\admin\\source\\repos\\BirdHouse\\BirdHouse\\appIcon.png"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Icon
 //
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON3               ICON                    "appIcon.ico"
+IDI_ICON1               ICON                    "appIcon.ico"
 
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////

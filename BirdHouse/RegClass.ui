@@ -114,7 +114,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Регистрация</string>
+     <string>Создать</string>
     </property>
    </widget>
    <widget class="QPushButton" name="exitButton">

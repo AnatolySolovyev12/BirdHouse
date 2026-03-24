@@ -5,12 +5,11 @@ AuthClass::AuthClass(QWidget* parent)
 {
 	ui.setupUi(this);
 
-	this->setWindowTitle("Authorization");
+	this->setWindowTitle("Авторизация");
 	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\icon.png"));
 
 	connect(ui.enterButton, &QPushButton::clicked, this, &AuthClass::logginFunc);
 	connect(ui.registerButton, &QPushButton::clicked, this, &AuthClass::regButtonPushed);
-
 
 	if (sqliteFunc())
 		createTable();
@@ -89,7 +88,6 @@ bool AuthClass::sqliteFunc()
 		qDebug() << "OPEN SQLite file with starting params (defaultParamsForAuth)";
 	else
 		qDebug() << "CREATE SQLite file with starting params (defaultParamsForAuth)";
-
 
 	return tempForCreateTable;
 }
@@ -191,7 +189,6 @@ void AuthClass::writeDefaulWindowParams()
 			query.addBindValue(ui.portLine->text());
 			query.addBindValue(ui.loginLine->text());
 			query.addBindValue(ui.passLine->text());
-
 
 			if (!query.exec())
 			{

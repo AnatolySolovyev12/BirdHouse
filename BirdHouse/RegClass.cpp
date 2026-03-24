@@ -5,7 +5,7 @@ RegClass::RegClass(QWidget* parent)
 {
 	ui.setupUi(this);
 
-	this->setWindowTitle("Registration");
+	this->setWindowTitle("Регистрация");
 	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\icon.png"));
 
 	connect(ui.exitButton, &QPushButton::clicked, this, &RegClass::exitFunc);
@@ -80,7 +80,6 @@ void RegClass::hideRegElement()
 	ui.passLabel->hide();
 	ui.passLine->hide();
 	ui.regButton->hide();
-
 
 	ui.statusBar->showMessage("Check code on your Email", 10000);
 }
