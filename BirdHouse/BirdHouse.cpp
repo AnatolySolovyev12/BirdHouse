@@ -5,6 +5,9 @@ BirdHouse::BirdHouse(QWidget* parent)
 {
 	ui.setupUi(this);
 
+	this->setWindowTitle("BirdHouse by Solovev");
+	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\icon.png"));
+
 	connect(ui.pushButtonSetting, &QPushButton::clicked, this, &BirdHouse::showGeneralParam);
 
 	trayIcon = new QSystemTrayIcon(this);

@@ -51,9 +51,6 @@ GeneralClass::GeneralClass(QObject *parent)
 	connect(tcpSocketClass, &TcpSocketClass::checkCodeInMail, regClass, &RegClass::hideRegElement);
 	connect(tcpSocketClass, &TcpSocketClass::registerIsDoneSignal, regClass, &RegClass::exitFunc);
 	connect(tcpSocketClass, &TcpSocketClass::statusBarRegMessege, regClass, &RegClass::statusBarMessegeForRegCLass);
-
-
-
 }
 
 

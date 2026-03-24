@@ -5,6 +5,9 @@ AuthClass::AuthClass(QWidget* parent)
 {
 	ui.setupUi(this);
 
+	this->setWindowTitle("Authorization");
+	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\icon.png"));
+
 	connect(ui.enterButton, &QPushButton::clicked, this, &AuthClass::logginFunc);
 	connect(ui.registerButton, &QPushButton::clicked, this, &AuthClass::regButtonPushed);
 

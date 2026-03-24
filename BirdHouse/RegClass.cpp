@@ -5,6 +5,9 @@ RegClass::RegClass(QWidget* parent)
 {
 	ui.setupUi(this);
 
+	this->setWindowTitle("Registration");
+	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\icon.png"));
+
 	connect(ui.exitButton, &QPushButton::clicked, this, &RegClass::exitFunc);
 	connect(ui.regButton, &QPushButton::clicked, this, &RegClass::registerFunc);
 	connect(ui.enterButton, &QPushButton::clicked, this, &RegClass::codeMailSendFunc);
