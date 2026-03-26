@@ -20,6 +20,7 @@ public:
 signals:
 	void userAndTask(QString id, QString task);
 	void setIpAndPortForRegClass(QString ip, QString port);
+	void setAuthBoolTrue();
 
 
 private:

@@ -278,7 +278,7 @@ void BirdHouse::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::ActivationReason::DoubleClick)
 	{
-		if (!windowShow)
+		if (!windowShow && userIsAuth)
 		{
 			this->show();
 			windowShow = true;
@@ -392,6 +392,13 @@ void BirdHouse::updateTasks()
 		ui.pushButtonSetting->setEnabled(true);
 		});
 };
+
+
+
+void BirdHouse::setBoolAuthTrue()
+{
+	userIsAuth = true;
+}
 
 
 

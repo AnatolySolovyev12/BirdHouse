@@ -50,6 +50,8 @@ public:
 
     void updateTasks();
 
+    void setBoolAuthTrue();
+
 
 signals:
     void giveObjectToConvertInJson(QTreeWidget* any, int idUser);
@@ -80,4 +82,5 @@ private:
     int lastNumberForTask = 1;
     int idUser = 1;
 
+    bool userIsAuth = false;
 }; 

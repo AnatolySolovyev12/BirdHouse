@@ -39,9 +39,12 @@ GeneralClass::GeneralClass(QObject *parent)
 
 	connect(this, &GeneralClass::userAndTask, birdHouseClass, &BirdHouse::setIdAndLastTask);
 
+	connect(this, &GeneralClass::setAuthBoolTrue, birdHouseClass, &BirdHouse::setBoolAuthTrue);
+
 	connect(tcpSocketClass, &TcpSocketClass::accessAllowed, [this](QString iduser, QString lastTask) {
 		emit this->userAndTask(iduser, lastTask);
 		this->showBirdWindow();
+		emit setAuthBoolTrue();
 		});
 
 	connect(tcpSocketClass, &TcpSocketClass::statusBarMessege, authClass, &AuthClass::setStatusBarMessege);
