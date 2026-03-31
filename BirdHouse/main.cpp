@@ -13,7 +13,5 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
     GeneralClass genClass;
 
-    std::cout << "ПРивет";
-
     return app.exec();
 }
