@@ -36,7 +36,7 @@ BirdHouse::BirdHouse(QWidget* parent)
 	connect(ui.treeWidget, &QTreeWidget::itemChanged, this, &BirdHouse::closeEditor);
 	connect(ui.treeWidget, &QTreeWidget::itemClicked, this, &BirdHouse::otherItemWasChecked);
 
-	connect(ui.pushButtonRefresh, &QPushButton::clicked, this, &BirdHouse::sendJSONtoServer);
+	connect(ui.sendButton, &QPushButton::clicked, this, &BirdHouse::sendJSONtoServer);
 
 	QMainWindow::setStatusBar(sBar);
 
@@ -359,11 +359,26 @@ void BirdHouse::showGeneralParam()
 
 void BirdHouse::sendJSONtoServer()
 {
-	ui.pushButtonAdd->setEnabled(false);
-	ui.pushButtonAddMinus->setEnabled(false);
-	ui.pushButtonRefresh->setEnabled(false);
-	ui.pushButtonSetting->setEnabled(false);
-	emit giveObjectToConvertInJson(ui.treeWidget, idUser);
+	if (ui.treeWidget->topLevelItemCount())
+	{
+		bool children = false;
+
+		for (int val = 0; val < ui.treeWidget->topLevelItemCount(); val++)
+		{
+			if (ui.treeWidget->topLevelItem(val)->childCount() > 0) children = true;
+		}
+
+		if (children)
+		{
+			ui.pushButtonAdd->setEnabled(false);
+			ui.pushButtonAddMinus->setEnabled(false);
+			ui.sendButton->setEnabled(false);
+			ui.pushButtonSetting->setEnabled(false);
+			emit giveObjectToConvertInJson(ui.treeWidget, idUser);
+		}
+		else
+			qDebug() << "Childrens are absent";
+	}
 }
 
 
@@ -390,7 +405,7 @@ void BirdHouse::updateTasks()
 	QTimer::singleShot(3000, [this](){
 		ui.pushButtonAdd->setEnabled(true);
 		ui.pushButtonAddMinus->setEnabled(true);
-		ui.pushButtonRefresh->setEnabled(true);
+		ui.sendButton->setEnabled(true);
 		ui.pushButtonSetting->setEnabled(true);
 		});
 };

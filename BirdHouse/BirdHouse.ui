@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>727</width>
-    <height>375</height>
+    <width>929</width>
+    <height>443</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QPushButton" name="pushButtonAdd">
@@ -115,7 +115,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonRefresh">
+         <widget class="QPushButton" name="sendButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -150,9 +150,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="historyButton">
           <property name="text">
-           <string>Тест</string>
+           <string>История</string>
           </property>
          </widget>
         </item>
@@ -176,7 +176,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="testButton">
           <property name="text">
            <string>Тест2</string>
           </property>
@@ -275,7 +275,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>727</width>
+     <width>929</width>
      <height>22</height>
     </rect>
    </property>
