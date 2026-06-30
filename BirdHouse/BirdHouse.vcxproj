@@ -59,6 +59,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AuthClass.cpp" />
+    <ClCompile Include="HistoryWidgetClass.cpp" />
     <ClCompile Include="JsonFormatingClass.cpp" />
     <ClCompile Include="RegClass.cpp" />
     <ClCompile Include="TcpSocketClass.cpp" />
@@ -74,6 +75,7 @@
     <ClCompile Include="GeneralParam.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="GeneralParam.ui" />
+    <QtUic Include="HistoryWidgetClass.ui" />
     <QtUic Include="RegClass.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +97,7 @@
     <QtMoc Include="RegClass.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="HistoryWidgetClass.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
   </ItemGroup>

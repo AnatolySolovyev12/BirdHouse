@@ -38,6 +38,8 @@ BirdHouse::BirdHouse(QWidget* parent)
 
 	connect(ui.sendButton, &QPushButton::clicked, this, &BirdHouse::sendJSONtoServer);
 
+	connect(ui.historyButton, &QPushButton::clicked, this, &BirdHouse::showHistoryWidget);
+
 	QMainWindow::setStatusBar(sBar);
 
 	myGenParam->setWindowIcon(QIcon("iconParam.png"));
@@ -417,5 +419,12 @@ void BirdHouse::setBoolAuthTrue()
 	userIsAuth = true;
 }
 
+
+
+void BirdHouse::showHistoryWidget()
+{
+	sharedPtr = QSharedPointer<HistoryWidgetClass>::create();
+	sharedPtr->show();
+}
 
 
