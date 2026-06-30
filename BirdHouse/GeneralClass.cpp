@@ -52,6 +52,18 @@ GeneralClass::GeneralClass(QObject *parent)
 	connect(tcpSocketClass, &TcpSocketClass::checkCodeInMail, regClass, &RegClass::hideRegElement);
 	connect(tcpSocketClass, &TcpSocketClass::registerIsDoneSignal, regClass, &RegClass::exitFunc);
 	connect(tcpSocketClass, &TcpSocketClass::statusBarRegMessege, regClass, &RegClass::statusBarMessegeForRegCLass);
+
+	connect(birdHouseClass, &BirdHouse::showHistorySignalWidget, [this](int idUser) {
+		sharedPtr = QSharedPointer<HistoryWidgetClass>::create(idUser);
+		sharedPtr->show();
+
+		connect(sharedPtr.data(), &HistoryWidgetClass::getHistorySignals, [this](QString firstDate, QString secondDate, int idUser, bool onlyUserCheckBox) {
+
+			qDebug() << '\n' << firstDate << "   " << secondDate << "   " << idUser << "   " << onlyUserCheckBox;
+		});
+
+		});
+
 }
 
 

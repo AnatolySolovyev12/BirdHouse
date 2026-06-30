@@ -19,9 +19,6 @@
 
 #include <QDate>
 
-#include "HistoryWidgetClass.h"
-
-
 class BirdHouse : public QMainWindow
 {
     Q_OBJECT
@@ -58,6 +55,8 @@ public:
 
 signals:
     void giveObjectToConvertInJson(QTreeWidget* any, int idUser);
+    void showHistorySignalWidget(int id);
+
 
 
 private:
@@ -86,6 +85,4 @@ private:
     int idUser = 1;
 
     bool userIsAuth = false;
-
-    QSharedPointer<HistoryWidgetClass>sharedPtr = nullptr;
 }; 

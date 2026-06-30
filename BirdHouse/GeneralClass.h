@@ -7,6 +7,8 @@
 #include "AuthClass.h"
 #include "RegClass.h"
 
+#include "HistoryWidgetClass.h"
+
 class GeneralClass : public QObject
 {
 	Q_OBJECT
@@ -29,4 +31,5 @@ private:
 	JsonFormatingClass* reFormatJsonClass = nullptr;
 	AuthClass* authClass = nullptr;
 	RegClass* regClass = nullptr;
+	QSharedPointer<HistoryWidgetClass>sharedPtr = nullptr;
 };

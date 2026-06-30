@@ -423,8 +423,7 @@ void BirdHouse::setBoolAuthTrue()
 
 void BirdHouse::showHistoryWidget()
 {
-	sharedPtr = QSharedPointer<HistoryWidgetClass>::create();
-	sharedPtr->show();
+	emit showHistorySignalWidget(idUser);
 }
 
 
