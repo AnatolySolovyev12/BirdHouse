@@ -359,11 +359,11 @@ void BirdHouse::showGeneralParam()
 
 void BirdHouse::sendJSONtoServer()
 {
-	if (ui.treeWidget->topLevelItemCount())
+	if (ui.treeWidget->topLevelItemCount()) // делаем проверку на наличие записей в дереве перед отправкой
 	{
 		bool children = false;
 
-		for (int val = 0; val < ui.treeWidget->topLevelItemCount(); val++)
+		for (int val = 0; val < ui.treeWidget->topLevelItemCount(); val++) // делаем проверку на наличие дочерних записией чтобы не отправлять бессмысленных записей
 		{
 			if (ui.treeWidget->topLevelItem(val)->childCount() > 0) children = true;
 		}
@@ -377,7 +377,7 @@ void BirdHouse::sendJSONtoServer()
 			emit giveObjectToConvertInJson(ui.treeWidget, idUser);
 		}
 		else
-			qDebug() << "Childrens are absent";
+			qDebug() << "\nChildrens are absent";
 	}
 }
 
