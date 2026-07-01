@@ -60,6 +60,7 @@ GeneralClass::GeneralClass(QObject *parent)
 		connect(sharedPtr.data(), &HistoryWidgetClass::getHistorySignals, [this](QString firstDate, QString secondDate, int idUser, bool onlyUserCheckBox) {
 
 			qDebug() << '\n' << firstDate << "   " << secondDate << "   " << idUser << "   " << onlyUserCheckBox;
+
 		});
 
 		});
