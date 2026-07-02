@@ -16,7 +16,6 @@ void JsonFormatingClass::reFormat(QTreeWidget* val, int idUser)
 
 	for (int count = 0; count < val->topLevelItemCount(); count++)
 	{
-
 		QJsonArray messageArray;
 
 		QTreeWidgetItem* parentTop = val->topLevelItem(count);
@@ -54,8 +53,28 @@ void JsonFormatingClass::reFormat(QTreeWidget* val, int idUser)
 		doc.setArray(arrayOfTask);
 	}
 
-
 	QByteArray bytes = doc.toJson(QJsonDocument::Compact); // или Indented
+
+	emit sendJsonToServer(bytes);
+}
+
+
+
+void JsonFormatingClass::historyReformat(QString dateFirst, QString dateSecond, int iD, bool onlyYou)
+{
+	QJsonDocument doc;
+
+	QJsonObject getHistory
+	{
+		{ "$&history&$", "true" },
+		{ "firstDate", dateFirst },
+		{ "secondDate", dateSecond },
+		{ "iD", QString::number(iD) },
+		{ "onlyYou", onlyYou }
+	};
+
+	doc.setObject(getHistory);
+	QByteArray bytes = doc.toJson(QJsonDocument::Compact);
 
 	emit sendJsonToServer(bytes);
 }

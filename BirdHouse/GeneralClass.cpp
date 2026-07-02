@@ -7,6 +7,7 @@ GeneralClass::GeneralClass(QObject *parent)
 	
 	connect(birdHouseClass, &BirdHouse::giveObjectToConvertInJson, reFormatJsonClass, &JsonFormatingClass::reFormat);
 	connect(reFormatJsonClass, &JsonFormatingClass::sendJsonToServer, tcpSocketClass, &TcpSocketClass::connectToServer);
+
 	connect(authClass, &AuthClass::showBirdMainWindows, this, &GeneralClass::showBirdWindow);
 	
 	connect(authClass, &AuthClass::verifySignal, tcpSocketClass, [&](QByteArray jdoc, QString serverAdress, quint16 serverPort) {
@@ -57,11 +58,7 @@ GeneralClass::GeneralClass(QObject *parent)
 		sharedPtr = QSharedPointer<HistoryWidgetClass>::create(idUser);
 		sharedPtr->show();
 
-		connect(sharedPtr.data(), &HistoryWidgetClass::getHistorySignals, [this](QString firstDate, QString secondDate, int idUser, bool onlyUserCheckBox) {
-
-			qDebug() << '\n' << firstDate << "   " << secondDate << "   " << idUser << "   " << onlyUserCheckBox;
-
-		});
+		connect(sharedPtr.data(), &HistoryWidgetClass::getHistorySignals, reFormatJsonClass , &JsonFormatingClass::historyReformat);
 
 		});
 

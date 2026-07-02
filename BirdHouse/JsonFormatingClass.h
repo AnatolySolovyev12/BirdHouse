@@ -18,9 +18,9 @@ public:
 	~JsonFormatingClass();
 
 	void reFormat(QTreeWidget* val, int idUser);
+	void historyReformat(QString dateFirst, QString dateSecond, int iD, bool onlyYou);
 
 signals:
 	void sendJsonToServer(QByteArray QByteArray);
-
 };
 
