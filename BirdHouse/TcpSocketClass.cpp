@@ -85,7 +85,7 @@ void TcpSocketClass::onReadyRead()
 {
 	QByteArray data = mTcpSocket->readAll();
 
-	qDebug() << "RX << " << data.constData();
+	qDebug() << "RX << " << data.constData(); //////////////////////////
 
 	if (data.constData() == QByteArray("$&OK&$") && !authBool)
 	{
@@ -103,6 +103,7 @@ void TcpSocketClass::onReadyRead()
 
 	if (data.contains("status"))
 	{
+		qDebug() << "status is check"; /////////////////////////////////
 		QJsonDocument jDoc = QJsonDocument::fromJson(data.constData());
 
 		if (jDoc.isNull()) {
@@ -150,7 +151,7 @@ void TcpSocketClass::onReadyRead()
 				emit statusBarRegMessege("User was register earlier. Try other user or auth");
 			}
 
-			if (jDoc["status"].toString() == "$&HISTORY&$")
+			if (rootArray["status"].toString() == "$&HISTORY&$")
 			{
 				qDebug() << jDoc;
 			}
