@@ -150,6 +150,11 @@ void TcpSocketClass::onReadyRead()
 				emit statusBarRegMessege("User was register earlier. Try other user or auth");
 			}
 
+			if (jDoc["status"].toString() == "$&HISTORY&$")
+			{
+				qDebug() << jDoc;
+			}
+
 			timerForCheckSending->stop();
 			resendingCounter = 0;
 			mTcpSocket->close();
