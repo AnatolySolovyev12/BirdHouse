@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <iostream>
 
 class TcpSocketClass : public QObject
 {
@@ -27,7 +28,7 @@ signals:
 	void checkCodeInMail();
 	void registerIsDoneSignal();
 	void statusBarRegMessege(QString text);
-
+	void transmitHistoryAnswer(QJsonDocument temp);
 
 
 

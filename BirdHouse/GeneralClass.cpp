@@ -59,9 +59,9 @@ GeneralClass::GeneralClass(QObject *parent)
 		sharedPtr->show();
 
 		connect(sharedPtr.data(), &HistoryWidgetClass::getHistorySignals, reFormatJsonClass , &JsonFormatingClass::historyReformat);
+		connect(tcpSocketClass, &TcpSocketClass::transmitHistoryAnswer, sharedPtr.data(), &HistoryWidgetClass::showResultFromServer);
 
 		});
-
 }
 
 

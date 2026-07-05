@@ -103,7 +103,6 @@ void TcpSocketClass::onReadyRead()
 
 	if (data.contains("status"))
 	{
-		qDebug() << "status is check"; /////////////////////////////////
 		QJsonDocument jDoc = QJsonDocument::fromJson(data.constData());
 
 		if (jDoc.isNull()) {
@@ -153,7 +152,7 @@ void TcpSocketClass::onReadyRead()
 
 			if (rootArray["status"].toString() == "$&HISTORY&$")
 			{
-				qDebug() << jDoc;
+				emit transmitHistoryAnswer(jDoc);
 			}
 
 			timerForCheckSending->stop();

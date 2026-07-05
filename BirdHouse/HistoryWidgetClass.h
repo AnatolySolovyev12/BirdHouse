@@ -2,6 +2,9 @@
 
 #include <QMainWindow>
 #include "ui_HistoryWidgetClass.h"
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 class HistoryWidgetClass : public QMainWindow
 {
@@ -12,6 +15,7 @@ public:
 	~HistoryWidgetClass();
 
 	void getHistoryFunc();
+	void showResultFromServer(QJsonDocument temp);
 
 signals:
 	void getHistorySignals(QString firstDate, QString secondDate, int idUser, bool onlyUserCheckBox);
