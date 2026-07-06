@@ -32,7 +32,8 @@ TcpSocketClass::TcpSocketClass(QObject* parent)
 
 TcpSocketClass::~TcpSocketClass()
 {
-	if (mTcpSocket->isOpen()) {
+	if (mTcpSocket->isOpen()) 
+	{
 		mTcpSocket->close();
 	}
 }
@@ -65,10 +66,12 @@ void TcpSocketClass::connectToServer(QByteArray messege)
 
 void TcpSocketClass::onConnected()
 {
-	// connectedState = true;
+	QDate curDate = QDate::currentDate();
+	QTime curTime = QTime::currentTime();
+
 	qDebug() << "\nConnected to server\n";
 
-	qDebug() << "TX << " << tempBufferForLastMessege.constData();
+	qDebug() << "TX : " + curDate.toString("dd-MM-yyyy") + " " + curTime.toString() << " << " << tempBufferForLastMessege.constData() << '\n';
 
 	mTcpSocket->write(tempBufferForLastMessege + "%" + QByteArray::number(tempBufferForLastMessege.length()));
 }
@@ -78,18 +81,37 @@ void TcpSocketClass::onConnected()
 void TcpSocketClass::onDisconnected()
 {
 	connectedState = false;
-	qDebug() << "\n" << "Disconnected from server." << "\n";
+	std::cout << "\n\nDisconnected from server.\n";
 }
 
 
 
 void TcpSocketClass::onReadyRead()
 {
-	QByteArray data = mTcpSocket->readAll();
+	data += mTcpSocket->readAll();
 
-	while (mTcpSocket->waitForReadyRead(100) && mTcpSocket->ConnectedState)
-		data += mTcpSocket->readAll();
+	if (data.size() > 1200000) // защита от переполнения буффера
+	{
+		qDebug() << "Buffer overflow, clearing data";
+		data.clear();
+		return;
+	}
 
+	bufferBool = true;
+
+	if (bufferBool)
+		QTimer::singleShot(200, [this]() {
+
+		bufferBool = false;
+		fullResultAccepted();
+
+			});
+}
+
+
+
+void TcpSocketClass::fullResultAccepted()
+{
 	std::cout << "RX << " << data.constData();
 
 	if (data.constData() == QByteArray("$&OK&$") && !authBool)
@@ -106,11 +128,13 @@ void TcpSocketClass::onReadyRead()
 		qDebug() << "CRC IS NOT CORRECT";
 	}
 
-	if (data.contains("status"))
-	{
-		QJsonDocument jDoc = QJsonDocument::fromJson(data.constData());
+	QJsonParseError error;
+	QJsonDocument jDoc = QJsonDocument::fromJson(data.constData(), &error);
 
-		if (jDoc.isNull()) {
+	if (data.contains("status") && error.error == QJsonParseError::NoError)
+	{
+		if (jDoc.isNull()) 
+		{
 			qDebug() << "\nJSON parse error in TcpSocketClass::onReadyRead()";
 			mTcpSocket->close();
 		}
@@ -165,6 +189,8 @@ void TcpSocketClass::onReadyRead()
 			mTcpSocket->close();
 		}
 	}
+
+	data.clear();
 }
 
 

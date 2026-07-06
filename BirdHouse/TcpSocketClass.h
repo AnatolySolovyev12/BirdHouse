@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonParseError>
 #include <iostream>
 
 class TcpSocketClass : public QObject
@@ -17,9 +18,7 @@ public:
 	~TcpSocketClass();
 
 	void setIpPort(QString ipSet, quint16 portSet);
-
-
-
+	void fullResultAccepted();
 
 signals:
 	void accessAllowed(QString iduser, QString lastTask);
@@ -30,12 +29,8 @@ signals:
 	void statusBarRegMessege(QString text);
 	void transmitHistoryAnswer(QJsonDocument temp);
 
-
-
-
 public slots:
 	void connectToServer(QByteArray messege);
-
 
 private slots:
 
@@ -43,7 +38,6 @@ private slots:
 	void onDisconnected();
 	void onReadyRead();
 	void onErrorOccurred(QAbstractSocket::SocketError socketError);
-
 
 private:
 	QTcpSocket* mTcpSocket = nullptr;
@@ -54,5 +48,7 @@ private:
 	int resendingCounter = 0;
 	QByteArray tempBufferForLastMessege;
 	bool authBool = true;
+	QByteArray data;
+	bool bufferBool = false;
 };
 
