@@ -58,8 +58,9 @@ void TcpSocketClass::connectToServer(QByteArray messege)
 	}
 
 	if (!authBool)
-		timerForCheckSending->start(5000);
+		timerForCheckSending->start(8000);
 }
+
 
 
 void TcpSocketClass::onConnected()
@@ -73,10 +74,11 @@ void TcpSocketClass::onConnected()
 }
 
 
+
 void TcpSocketClass::onDisconnected()
 {
 	connectedState = false;
-	qDebug() << "\nDisconnected from server.";
+	qDebug() << "\n" << "Disconnected from server." << "\n";
 }
 
 
@@ -85,7 +87,10 @@ void TcpSocketClass::onReadyRead()
 {
 	QByteArray data = mTcpSocket->readAll();
 
-	qDebug() << "RX << " << data.constData(); //////////////////////////
+	while (mTcpSocket->waitForReadyRead(100) && mTcpSocket->ConnectedState)
+		data += mTcpSocket->readAll();
+
+	std::cout << "RX << " << data.constData();
 
 	if (data.constData() == QByteArray("$&OK&$") && !authBool)
 	{
@@ -106,7 +111,7 @@ void TcpSocketClass::onReadyRead()
 		QJsonDocument jDoc = QJsonDocument::fromJson(data.constData());
 
 		if (jDoc.isNull()) {
-			qDebug() << "JSON parse error in TcpSocketClass::onReadyRead()";
+			qDebug() << "\nJSON parse error in TcpSocketClass::onReadyRead()";
 			mTcpSocket->close();
 		}
 		else
