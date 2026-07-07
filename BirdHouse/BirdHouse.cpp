@@ -6,6 +6,7 @@ BirdHouse::BirdHouse(QWidget* parent)
 	ui.setupUi(this);
 
 	ui.pushButtonSetting->setEnabled(false);
+	ui.importButton->setEnabled(false);
 
 	this->setWindowTitle("BirdHouse by Solovev");
 	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\icon.png"));
@@ -245,6 +246,17 @@ void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any) // закрываем 
 	if (any == middleItem && column == middleColumn)
 		return;
 
+	if (ui.treeWidget->currentItem()->parent() == nullptr) 
+	{
+		ui.importButton->setEnabled(true);
+		ui.pushButtonAdd->setEnabled(false);
+	}
+	else
+	{
+		ui.importButton->setEnabled(false);
+		ui.pushButtonAdd->setEnabled(true);
+	}
+
 	QString temporary = any->text(0).trimmed(); // убираем пробелы
 	any->setText(0, temporary);
 
@@ -269,10 +281,13 @@ void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any) // закрываем 
 
 
 
-void BirdHouse::mousePressEvent(QMouseEvent* event)
+void BirdHouse::mousePressEvent(QMouseEvent* event) // фиксируем факт нажатия вне QTreeWidget
 {
-	if (event->button() == Qt::LeftButton) {
+	if (event->button() == Qt::LeftButton) 
+	{
 		ui.treeWidget->setCurrentItem(ui.treeWidget->invisibleRootItem());
+		ui.importButton->setEnabled(false);
+		ui.pushButtonAddMinus->setEnabled(false);
 	}
 }
 

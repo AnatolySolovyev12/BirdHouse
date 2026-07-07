@@ -43,6 +43,9 @@ void HistoryWidgetClass::showResultFromServer(QJsonDocument temp)
 			QTableWidgetItem* tempItem = new QTableWidgetItem();
 			ui.tableWidget->setItem(rowCounter, itemCounter, tempItem);
 
+			if (rowCounter % 2 == 0) tempItem->setBackground(QColor(176, 224, 230)); // задаём чередующийся фон для записей
+			else tempItem->setBackground(QColor(220, 220, 220));
+
 			switch (itemCounter)
 			{
 			case(0): {tempItem->setText(val["id_user"].toString()); break;}

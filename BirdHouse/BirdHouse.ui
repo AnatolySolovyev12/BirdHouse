@@ -174,9 +174,9 @@
        </widget>
       </item>
       <item row="9" column="0">
-       <widget class="QPushButton" name="testButton">
+       <widget class="QPushButton" name="importButton">
         <property name="text">
-         <string>Тест2</string>
+         <string>Импорт</string>
         </property>
        </widget>
       </item>
