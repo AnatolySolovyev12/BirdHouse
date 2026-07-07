@@ -7,6 +7,7 @@ BirdHouse::BirdHouse(QWidget* parent)
 
 	ui.pushButtonSetting->setEnabled(false);
 	ui.importButton->setEnabled(false);
+	ui.pushButtonAddMinus->setEnabled(false);
 
 	this->setWindowTitle("BirdHouse by Solovev");
 	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\icon.png"));
@@ -250,11 +251,13 @@ void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any) // закрываем 
 	{
 		ui.importButton->setEnabled(true);
 		ui.pushButtonAdd->setEnabled(true);
+		ui.pushButtonAddMinus->setEnabled(true);
 	}
 	else
 	{
 		ui.importButton->setEnabled(false);
 		ui.pushButtonAdd->setEnabled(false);
+		ui.pushButtonAddMinus->setEnabled(true);
 	}
 
 	QString temporary = any->text(0).trimmed(); // убираем пробелы
