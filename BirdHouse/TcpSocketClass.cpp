@@ -112,6 +112,8 @@ void TcpSocketClass::onReadyRead()
 
 void TcpSocketClass::fullResultAccepted()
 {
+	if (data.isEmpty()) return;
+	
 	std::cout << "RX << " << data.constData();
 
 	if (data.constData() == QByteArray("$&OK&$") && !authBool)
