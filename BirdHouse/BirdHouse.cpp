@@ -249,12 +249,12 @@ void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any) // закрываем 
 	if (ui.treeWidget->currentItem()->parent() == nullptr) 
 	{
 		ui.importButton->setEnabled(true);
-		ui.pushButtonAdd->setEnabled(false);
+		ui.pushButtonAdd->setEnabled(true);
 	}
 	else
 	{
 		ui.importButton->setEnabled(false);
-		ui.pushButtonAdd->setEnabled(true);
+		ui.pushButtonAdd->setEnabled(false);
 	}
 
 	QString temporary = any->text(0).trimmed(); // убираем пробелы
@@ -288,6 +288,7 @@ void BirdHouse::mousePressEvent(QMouseEvent* event) // фиксируем фак
 		ui.treeWidget->setCurrentItem(ui.treeWidget->invisibleRootItem());
 		ui.importButton->setEnabled(false);
 		ui.pushButtonAddMinus->setEnabled(false);
+		ui.pushButtonAdd->setEnabled(true);
 	}
 }
 
