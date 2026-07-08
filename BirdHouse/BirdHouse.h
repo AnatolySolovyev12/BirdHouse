@@ -19,6 +19,8 @@
 
 #include <QDate>
 
+#include <QAxObject>
+
 class BirdHouse : public QMainWindow
 {
     Q_OBJECT
@@ -43,15 +45,15 @@ public:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void cmdOpen();
     void cmdClose();
+
     void showGeneralParam();
-
     void setIdAndLastTask(QString id, QString task);
-
     void updateTasks();
 
     void setBoolAuthTrue();
-
     void showHistoryWidget();
+
+    void importTasks();
 
 signals:
     void giveObjectToConvertInJson(QTreeWidget* any, int idUser);

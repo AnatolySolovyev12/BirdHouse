@@ -42,6 +42,9 @@ BirdHouse::BirdHouse(QWidget* parent)
 
 	connect(ui.historyButton, &QPushButton::clicked, this, &BirdHouse::showHistoryWidget);
 
+	connect(ui.importButton, &QPushButton::clicked, this, &BirdHouse::importTasks);
+
+
 	QMainWindow::setStatusBar(sBar);
 
 	myGenParam->setWindowIcon(QIcon("iconParam.png"));
@@ -247,7 +250,7 @@ void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any) // закрываем 
 	if (any == middleItem && column == middleColumn)
 		return;
 
-	if (ui.treeWidget->currentItem()->parent() == nullptr) 
+	if (ui.treeWidget->currentItem()->parent() == nullptr)
 	{
 		ui.importButton->setEnabled(true);
 		ui.pushButtonAdd->setEnabled(true);
@@ -286,7 +289,7 @@ void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any) // закрываем 
 
 void BirdHouse::mousePressEvent(QMouseEvent* event) // фиксируем факт нажатия вне QTreeWidget
 {
-	if (event->button() == Qt::LeftButton) 
+	if (event->button() == Qt::LeftButton)
 	{
 		ui.treeWidget->setCurrentItem(ui.treeWidget->invisibleRootItem());
 		ui.importButton->setEnabled(false);
@@ -423,7 +426,7 @@ void BirdHouse::updateTasks()
 		ui.treeWidget->topLevelItem(countChild)->setText(0, QString::number(lastNumberForTask + countChild));
 	}
 
-	QTimer::singleShot(3000, [this](){
+	QTimer::singleShot(3000, [this]() {
 		ui.pushButtonAdd->setEnabled(true);
 		ui.pushButtonAddMinus->setEnabled(true);
 		ui.sendButton->setEnabled(true);
@@ -446,3 +449,77 @@ void BirdHouse::showHistoryWidget()
 }
 
 
+
+void BirdHouse::importTasks()
+{
+	QString importExcel = QFileDialog::getOpenFileName(0, "Выбор файла донора", "", "*.xls *.xlsx");
+
+	if (importExcel == "")
+	{
+		return;
+	}
+
+	QSharedPointer<QAxObject>excelDonor(new QAxObject("Excel.Application", 0));
+	QSharedPointer<QAxObject>workbooksDonor(excelDonor->querySubObject("Workbooks"));
+	QSharedPointer<QAxObject>workbookDonor(workbooksDonor->querySubObject("Open(const QString&)", importExcel));
+	QSharedPointer<QAxObject>sheetsDonor(workbookDonor->querySubObject("Worksheets"));
+
+	QSharedPointer<QAxObject>sheetDonor(sheetsDonor->querySubObject("Item(int)", 1));
+	QSharedPointer<QAxObject>usedRangeDonor(sheetDonor->querySubObject("UsedRange"));
+	QSharedPointer<QAxObject>rowsDonor(usedRangeDonor->querySubObject("Rows"));
+	int countRowsDonor = rowsDonor->property("Count").toInt();
+	QSharedPointer<QAxObject>usedRangeColDonor(sheetDonor->querySubObject("UsedRange"));
+	QSharedPointer<QAxObject>columnsDonor(usedRangeColDonor->querySubObject("Columns"));
+	int countColsDonor = columnsDonor->property("Count").toInt();
+
+	QList<QStringList> arrStrings;
+
+	for (int row = 1; row <= countRowsDonor; ++row)
+	{
+		QStringList tempStringListTask;
+
+		for (int column = 1; column <= 9; ++column)
+		{
+			QSharedPointer<QAxObject>cell(sheetDonor.data()->querySubObject("Cells(int,int)", row, column));
+			tempStringListTask << cell->property("Value").toString().trimmed();
+		}
+
+		arrStrings.push_back(tempStringListTask);
+	}
+
+	workbookDonor->dynamicCall("Close()");
+	excelDonor->dynamicCall("Quit()");
+
+	QTreeWidgetItem* any;
+
+	for (auto& val : arrStrings)
+	{
+		any = new QTreeWidgetItem(ui.treeWidget->currentItem());
+
+		//any->setText(0, QString::number(any->parent()->indexOfChild(any) + 1));
+
+		any->setText(0, "9");
+
+		any->setText(1, val[0]);
+		any->setText(2, val[1]);
+
+		any->setBackground(0, QColor(221, 221, 221, 255));
+		any->setBackground(1, QColor(245, 216, 183, 255));
+		any->setBackground(2, QColor(217, 225, 187, 255));
+
+		any->setCheckState(3, val[3] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
+		any->setCheckState(3, val[4] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
+		any->setCheckState(3, val[5] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
+		any->setCheckState(3, val[6] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
+
+		any->setText(7, val[7]);
+		any->setText(8, val[8]);
+		any->setText(9, val[9]);
+
+		any->setBackground(7, QColor(119, 168, 142, 255));
+		any->setBackground(8, QColor(79, 168, 142, 255));
+		any->setBackground(9, QColor(88, 122, 111, 255));
+
+		any = nullptr;
+	}
+}
