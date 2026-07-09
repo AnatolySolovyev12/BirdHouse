@@ -7,18 +7,13 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QMouseEvent>
-
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QAction>
-
 #include <windows.h>
-
 #include "GeneralParam.h"
 #include <qtimer.h>
-
 #include <QDate>
-
 #include <QAxObject>
 
 class BirdHouse : public QMainWindow
@@ -31,7 +26,6 @@ public:
 
     void addItemInList();
     void deleteItemInList();
-
 
     void mousePressEvent(QMouseEvent* event);
     void sendJSONtoServer();
@@ -58,8 +52,6 @@ public:
 signals:
     void giveObjectToConvertInJson(QTreeWidget* any, int idUser);
     void showHistorySignalWidget(int id);
-
-
 
 private:
     Ui::BirdHouseClass ui;
