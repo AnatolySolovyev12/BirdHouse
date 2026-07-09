@@ -5,6 +5,8 @@ HistoryWidgetClass::HistoryWidgetClass(int idUser, QWidget* parent)
 {
 	ui.setupUi(this);
 
+	this->setWindowIcon(QIcon(QCoreApplication::applicationDirPath() + "\\history.png"));
+
 	connect(ui.getButton, &QPushButton::clicked, this, &HistoryWidgetClass::getHistoryFunc);
 
 	ui.tableWidget->setColumnCount(14);
