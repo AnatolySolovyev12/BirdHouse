@@ -481,7 +481,8 @@ void BirdHouse::importTasks()
 		for (int column = 1; column <= 9; ++column)
 		{
 			QSharedPointer<QAxObject>cell(sheetDonor.data()->querySubObject("Cells(int,int)", row, column));
-			tempStringListTask << cell->property("Value").toString().trimmed();
+
+			tempStringListTask << cell->property("Text").toString().trimmed();
 		}
 
 		arrStrings.push_back(tempStringListTask);
@@ -496,10 +497,7 @@ void BirdHouse::importTasks()
 	{
 		any = new QTreeWidgetItem(ui.treeWidget->currentItem());
 
-		//any->setText(0, QString::number(any->parent()->indexOfChild(any) + 1));
-
-		any->setText(0, "9");
-
+		any->setText(0, QString::number(any->parent()->indexOfChild(any) + 1));
 		any->setText(1, val[0]);
 		any->setText(2, val[1]);
 
@@ -507,14 +505,14 @@ void BirdHouse::importTasks()
 		any->setBackground(1, QColor(245, 216, 183, 255));
 		any->setBackground(2, QColor(217, 225, 187, 255));
 
-		any->setCheckState(3, val[3] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
-		any->setCheckState(3, val[4] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
-		any->setCheckState(3, val[5] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
-		any->setCheckState(3, val[6] == "1" ? Qt::CheckState(true) : Qt::CheckState(true));
+		any->setCheckState(3, val[2] == "1" ? Qt::Checked : Qt::Unchecked);
+		any->setCheckState(4, val[3] == "1" ? Qt::Checked : Qt::Unchecked);
+		any->setCheckState(5, val[4] == "1" ? Qt::Checked : Qt::Unchecked);
+		any->setCheckState(6, val[5] == "1" ? Qt::Checked : Qt::Unchecked);
 
-		any->setText(7, val[7]);
-		any->setText(8, val[8]);
-		any->setText(9, val[9]);
+		any->setText(7, val[6]);
+		any->setText(8, val[7]);
+		any->setText(9, val[8]);
 
 		any->setBackground(7, QColor(119, 168, 142, 255));
 		any->setBackground(8, QColor(79, 168, 142, 255));
