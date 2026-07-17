@@ -6,6 +6,8 @@ What can:
 2) Allows you to register new users in AOEBird.
 3) There is an authorization window.
 4) Hidden console for viewing logs.
+5) Display the history of notifications previously sent to the server.
+6) Import tasks from Excel document by first 9 columns.
 
 Что умеет:
 
@@ -13,5 +15,7 @@ What can:
 2) Позволяет регистрировать новых пользователей в AOEBird.
 3) Присутствует окно авторизации.
 4) Скрываемая консоль для просмотра логов.
+5) Выводить историю ранее отправленных на сервер уведомлений.
+6) Импортировать задания из Excel документа по первым 9-и столбам.
 
-![NEW GIF](https://github.com/user-attachments/assets/b2cc2403-cbe2-4773-aa89-aaba62865a7e)
+<img width="1358" height="930" alt="12345" src="https://github.com/user-attachments/assets/7ee3c8df-0a7e-479e-93e1-2b02c295f36a" />
