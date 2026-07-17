@@ -34,7 +34,7 @@ public:
 
     void setData();
     void closeEditor(QTreeWidgetItem* any);
-    void otherItemWasChecked(QTreeWidgetItem* any);
+    void otherItemWasChecked(QTreeWidgetItem* any, int columnFunc);
 
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void cmdOpen();
