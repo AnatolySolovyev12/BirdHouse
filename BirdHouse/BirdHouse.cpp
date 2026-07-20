@@ -247,7 +247,7 @@ void BirdHouse::closeEditor(QTreeWidgetItem* any) // слот закрытия �
 
 void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any, int columnFunc) // закрываем открытый редактор в случае переключения на другой элемент
 {
-	qDebug() << "ITEM CHEKED"; ///////////////////////
+	qDebug() << "OTHER ITEM CHEKED"; ///////////////////////
 
 	if (offChanger) return;
 
@@ -287,15 +287,16 @@ void BirdHouse::otherItemWasChecked(QTreeWidgetItem* any, int columnFunc) // з�
 	temporary = any->text(9).trimmed(); // убираем пробелы
 	any->setText(9, temporary);
 
+	/*
 	if (middleItem) {
 		closeEditor(middleItem); // прогоняем всю валидацию/правки ////////////////////////////
 	}
+	*/
+	ui.treeWidget->closePersistentEditor(middleItem, middleColumn);
 
-	//ui.treeWidget->closePersistentEditor(middleItem, middleColumn);
+	middleItem = nullptr;
 
-	//middleItem = nullptr;
-
-	qDebug() << "ITEM CHEKED FULL"; ///////////////////////
+	qDebug() << "OTHER ITEM CHEKED FULL"; ///////////////////////
 
 }
 
